@@ -1,0 +1,6 @@
+{
+  "name": "DompetKu - Catatan Keuangan Pribadi",
+  "description": "Aplikasi manajemen dan pencatatan keuangan modern untuk pemasukan, pengeluaran, anggaran, multi-dompet, dan visualisasi grafik.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

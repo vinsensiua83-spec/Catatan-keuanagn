@@ -1,0 +1,347 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User account and preferences",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique user identifier matching auth uid",
+          "maxLength": 128
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address",
+          "maxLength": 256
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name of the user",
+          "maxLength": 128
+        },
+        "currency": {
+          "type": "string",
+          "description": "Selected currency code, e.g., IDR or USD",
+          "maxLength": 10
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of user creation",
+          "maxLength": 64
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of last update",
+          "maxLength": 64
+        }
+      },
+      "required": ["id", "email"]
+    },
+    "Wallet": {
+      "title": "Wallet",
+      "description": "Wallet or financial account (Cash, Bank, E-Wallet)",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique wallet identifier",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID",
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "description": "Wallet name (e.g. Tunai, BCA, GoPay)",
+          "maxLength": 64,
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "description": "Wallet type: cash, bank, ewallet, other",
+          "maxLength": 32
+        },
+        "initialBalance": {
+          "type": "number",
+          "description": "Starting balance"
+        },
+        "currentBalance": {
+          "type": "number",
+          "description": "Computed or current wallet balance"
+        },
+        "color": {
+          "type": "string",
+          "description": "Theme color code for wallet card",
+          "maxLength": 32
+        },
+        "icon": {
+          "type": "string",
+          "description": "Icon identifier",
+          "maxLength": 64
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp",
+          "maxLength": 64
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp",
+          "maxLength": 64
+        }
+      },
+      "required": ["id", "userId", "name", "type"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Transaction category for income or expense",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique category identifier",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID",
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "description": "Category name (e.g. Makanan, Gaji)",
+          "maxLength": 64,
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "description": "Transaction type: income or expense",
+          "maxLength": 32
+        },
+        "icon": {
+          "type": "string",
+          "description": "Lucide icon identifier",
+          "maxLength": 64
+        },
+        "color": {
+          "type": "string",
+          "description": "Hex or tailwind color name",
+          "maxLength": 32
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp",
+          "maxLength": 64
+        }
+      },
+      "required": ["id", "userId", "name", "type"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Single financial record for income, expense, or transfer",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique transaction identifier",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID",
+          "maxLength": 128
+        },
+        "walletId": {
+          "type": "string",
+          "description": "Associated wallet ID",
+          "maxLength": 128
+        },
+        "type": {
+          "type": "string",
+          "description": "Transaction type: income, expense, transfer",
+          "maxLength": 32
+        },
+        "amount": {
+          "type": "number",
+          "description": "Positive numeric transaction amount"
+        },
+        "categoryId": {
+          "type": "string",
+          "description": "Category identifier",
+          "maxLength": 128
+        },
+        "categoryName": {
+          "type": "string",
+          "description": "Category display name",
+          "maxLength": 64
+        },
+        "date": {
+          "type": "string",
+          "description": "Date formatted YYYY-MM-DD",
+          "maxLength": 32
+        },
+        "note": {
+          "type": "string",
+          "description": "Optional notes or description",
+          "maxLength": 500
+        },
+        "toWalletId": {
+          "type": "string",
+          "description": "Target wallet if type is transfer",
+          "maxLength": 128
+        },
+        "isRecurring": {
+          "type": "boolean",
+          "description": "Whether spawned from recurring rule"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp",
+          "maxLength": 64
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp",
+          "maxLength": 64
+        }
+      },
+      "required": ["id", "userId", "walletId", "type", "amount", "date"]
+    },
+    "Budget": {
+      "title": "Budget",
+      "description": "Budget limit for a specific category and month",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique budget identifier",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID",
+          "maxLength": 128
+        },
+        "categoryId": {
+          "type": "string",
+          "description": "Category ID for this budget",
+          "maxLength": 128
+        },
+        "month": {
+          "type": "string",
+          "description": "Target month in format YYYY-MM",
+          "maxLength": 16
+        },
+        "limitAmount": {
+          "type": "number",
+          "description": "Maximum spending budget"
+        },
+        "alertThreshold": {
+          "type": "number",
+          "description": "Alert threshold percentage (e.g., 80)"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp",
+          "maxLength": 64
+        }
+      },
+      "required": ["id", "userId", "categoryId", "month", "limitAmount"]
+    },
+    "RecurringTransaction": {
+      "title": "RecurringTransaction",
+      "description": "Template for repeating income or expense",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique recurring identifier",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID",
+          "maxLength": 128
+        },
+        "walletId": {
+          "type": "string",
+          "description": "Associated wallet ID",
+          "maxLength": 128
+        },
+        "type": {
+          "type": "string",
+          "description": "Type: income or expense",
+          "maxLength": 32
+        },
+        "amount": {
+          "type": "number",
+          "description": "Recurring amount"
+        },
+        "categoryId": {
+          "type": "string",
+          "description": "Category identifier",
+          "maxLength": 128
+        },
+        "frequency": {
+          "type": "string",
+          "description": "Frequency: daily, weekly, monthly, yearly",
+          "maxLength": 32
+        },
+        "startDate": {
+          "type": "string",
+          "description": "Start date YYYY-MM-DD",
+          "maxLength": 32
+        },
+        "lastProcessedDate": {
+          "type": "string",
+          "description": "Date of last auto-generation",
+          "maxLength": 32
+        },
+        "note": {
+          "type": "string",
+          "description": "Note or label for recurring item",
+          "maxLength": 500
+        },
+        "active": {
+          "type": "boolean",
+          "description": "Whether active or paused"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp",
+          "maxLength": 64
+        }
+      },
+      "required": ["id", "userId", "walletId", "type", "amount", "frequency", "startDate"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile document"
+    },
+    "/wallets/{walletId}": {
+      "schema": "Wallet",
+      "description": "User financial wallets/accounts"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Transaction categories"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Individual income and expense transactions"
+    },
+    "/budgets/{budgetId}": {
+      "schema": "Budget",
+      "description": "Monthly category budget records"
+    },
+    "/recurring/{recurringId}": {
+      "schema": "RecurringTransaction",
+      "description": "Scheduled recurring transactions"
+    }
+  }
+}
